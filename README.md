@@ -115,7 +115,7 @@ public AjaxResult exceptionHandler(MException e, HttpServletResponse response) {
 ...
 ~~~
 ## 3.ajax工具类
-~~~
+~~~ java
 ...
 public AjaxResult(int code, boolean success, String message, Object dataSet) {
     this.code = code;
