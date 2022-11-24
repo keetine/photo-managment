@@ -15,13 +15,21 @@ npm run serve
 ## 1. 自定义全局弹窗
 
 ![image](https://user-images.githubusercontent.com/56806703/203675375-c6c8d73e-8208-47ed-a2f9-86e245741269.png)
+
 `{message:"请输入用户名"，type:"error"}`
+
 ![image](https://user-images.githubusercontent.com/56806703/203676039-60ae4987-48ae-43d4-b86c-64bb18e41bf0.png)
+
 `{message:"今天天天气不错"，type:"default"}`
+
 ![image](https://user-images.githubusercontent.com/56806703/203676401-a0a05bd1-f421-4db5-be8f-a1e287d2f0f5.png)
+
 `{message:"登录成功"，type:"success"}`
+
 ![image](https://user-images.githubusercontent.com/56806703/203676647-75afcb43-ed83-4fea-9cf8-8ed15815cece.png)
+
 `{message:"住手！别点那里"，type:"warning"}`
+
 
 ## 2. 页面效果
 ### 2.1 登陆注册
