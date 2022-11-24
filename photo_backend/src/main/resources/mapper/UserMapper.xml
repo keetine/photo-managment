@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.photo.photo_backend.mapper.UserMapper">
+    <sql id="user">
+        username
+        , password, nick_name,avatar
+    </sql>
+    <insert id="insertUser" parameterType="com.photo.photo_backend.domain.VO.UserLoginVO">
+        insert into user (username, password, nick_name, avatar)
+        values (#{username}, #{password}, 'Auto name', 'http://localhost:8080/img/image (5).jpg')
+    </insert>
+
+    <select id="selectUserByUsername" resultType="com.photo.photo_backend.domain.VO.UserLoginVO">
+        select username,
+               password
+        from user
+        where username = #{username}
+    </select>
+
+    <select id="selectUserVoByUsername" resultType="com.photo.photo_backend.domain.VO.UserVO">
+        select id,
+               username,
+               nick_name,
+               avatar
+        from user
+        where username = #{username}
+    </select>
+
+    <update id="updateUser" parameterType="com.photo.photo_backend.domain.VO.UserLoginVO">
+        update user
+        set password = #{password}
+        where username = #{username}
+    </update>
+
+    <update id="updateUserByVo" parameterType="com.photo.photo_backend.domain.VO.UserVO">
+        <if test="nickName != null">
+            update user
+            set nick_name = #{nickName}
+            where username = #{username}
+        </if>
+    </update>
+    <update id="updateAvatar" parameterType="com.photo.photo_backend.domain.VO.UserVO">
+        <if test="avatar != null">
+            update user
+            set avatar = #{avatar}
+            where username = #{username}
+        </if>
+    </update>
+
+</mapper>

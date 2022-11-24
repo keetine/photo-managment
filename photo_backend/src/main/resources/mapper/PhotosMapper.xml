@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.photo.photo_backend.mapper.PhotosMapper">
+    <insert id="insert" parameterType="com.photo.photo_backend.domain.Photos">
+        insert into photos (category_id, create_time, address, original, thumbnail, username)
+        values (#{categoryId}, NOW(), #{address}, #{original}, #{thumbnail}, #{username})
+    </insert>
+    <select id="selectCountAll" resultType="int">
+        select count(*)
+        from photos
+        where username = #{param0}
+    </select>
+    <select id="selectPhotosByCategory" resultType="com.photo.photo_backend.domain.Photos">
+        select *
+        from photos
+        where category_id = #{param0}
+    </select>
+    <select id="selectPhotosByRange" resultType="com.photo.photo_backend.domain.Photos">
+        select *
+        from photos
+        where category_id = #{categoryId} limit #{start}
+            , #{end}
+    </select>
+    <select id="selectAllPhotosByRange" resultType="com.photo.photo_backend.domain.Photos">
+        select *
+        from photos
+        where username = #{userName} limit #{start}
+            , #{end}
+    </select>
+    <select id="selectAllPhotos" resultType="com.photo.photo_backend.domain.VO.PhotoVO">
+        SELECT photos.id,
+               photos.category_id,
+               photos.create_time,
+               photos.address,
+               photos.thumbnail,
+               photos.original,
+               category.category_name category_name
+        FROM `photos`
+                 LEFT JOIN category
+                           ON category.id = photos.category_id
+        WHERE category.username = #{username}
+    </select>
+
+    <!--    parameterType为List<int>-->
+    <delete id="delete" parameterType="java.util.List">
+        delete from photos where id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectPhotosByIds" resultType="com.photo.photo_backend.domain.Photos" parameterType="List">
+        select *
+        from photos
+        where id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="getCategoryNameById" resultType="String" parameterType="Integer">
+        select category_name
+        from category
+        where id = #{param0}
+    </select>
+</mapper>

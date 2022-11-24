@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.photo.photo_backend.mapper.CategoryMapper">
+    <select id="selectCategoriesByUsername" parameterType="String" resultType="com.photo.photo_backend.domain.Category">
+        -- 查询用户的所有分类，并统计分类下的照片数量
+        select c.id, c.category_name, c.username, c.thumbnail, count(p.id) as photo_num
+        from category c
+        left join photos p
+        on c.id = p.category_id
+        where c.username = #{username}
+        group by c.id
+    </select>
+    <select id="selectCategoryByUsernameAndCategoryName" resultType="com.photo.photo_backend.domain.Category">
+        select id, category_name, username, thumbnail
+        from category
+        where username = #{username} and category_name = #{categoryName}
+    </select>
+    <insert id="insertCategory" parameterType="com.photo.photo_backend.domain.Category">
+        insert into category (category_name, username, thumbnail)
+        values (#{categoryName}, #{username}, #{thumbnail})
+    </insert>
+    <select id="selectCategoryById" resultType="com.photo.photo_backend.domain.Category">
+        select id, category_name, username, thumbnail
+        from category
+        where id = #{id}
+    </select>
+
+    <update id="updateCategory" parameterType="com.photo.photo_backend.domain.Category">
+        update category
+        set category_name = #{categoryName}, thumbnail = #{thumbnail}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCategory" parameterType="com.photo.photo_backend.domain.Category">
+        delete from category
+        where id = #{id}
+    </delete>
+</mapper>
